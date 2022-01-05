@@ -13,20 +13,7 @@ require_relative 'hello_world_brick'
 
 module GoodData
   module Bricks
-    class Pipeline
-      # Pipeline preparation code
-      def self.prepare(pipeline)
-        pipeline.reverse.reduce(nil) do |memo, app|
-          if memo.nil?
-            app.respond_to?(:new) ? app.new : app
-          elsif app.respond_to?(:new)
-            app.new(app: memo)
-          else
-            app.app = memo
-            app
-          end
-        end
-      end
+    class Pipeline < GoodData::Bricks::PipelineBase
 
       def self.users_brick_pipeline
         prepare([
